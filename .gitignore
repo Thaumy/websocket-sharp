@@ -1,14 +1,58 @@
-## Ignore build results and temporary files.
+# compiled
+*.class
+*.com
+*.dll
+*.exe
+*.obj
+*.so
+*.o
+*.a
 
-Backup*
-_UpgradeReport_Files
+# package
+*.dmg
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.7z
+*.gz
+
+# log
+*.log
+
+# os
+System Volume Information
+.Spotlight-V100
+$Recycle.Bin
+.Trash-1000
+ehthumbs.db
+.DS_Store?
+.DS_Store
+Thumbs.db
+.Trashes
+._*
+
+# node
+dist_electron
+node_modules
+dist
+
+# editor
+.gradle
+.vscode
+.idea
+.vs
+
+# local env
+.env.*.local
+.env.local
+
+# cmake
+cmake-build-debug-coverage
+cmake-build-debug
+
+# build
+build
 bin
 obj
-
-*.mdb
-*.pdb
-*.pidb
-*.suo
-*.user
-*.userprefs
-UpgradeLog*.*
