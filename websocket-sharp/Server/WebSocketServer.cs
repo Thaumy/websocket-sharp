@@ -1002,6 +1002,12 @@ namespace WebSocketSharp.Server
 
     #region Public Methods
 
+    public void AddAddWebSocketService<TBehavior>(string path,Func<TBehavior> f)
+      where TBehavior : WebSocketBehavior
+    {
+      _services.AddService<TBehavior> (path, f);
+    }
+
     /// <summary>
     /// Adds a WebSocket service with the specified behavior and path.
     /// </summary>
