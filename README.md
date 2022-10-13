@@ -4,7 +4,7 @@ websocket-sharp self build fork for latest .NET SDK.
 
 No docs and examples.
 
-[parenet repo](https://github.com/sta/websocket-sharp)
+[base repo](https://github.com/sta/websocket-sharp)
 
 ---
 
