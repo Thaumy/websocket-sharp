@@ -2,6 +2,8 @@
 
 websocket-sharp self build fork for latest .NET SDK.
 
+- Add factory overload for WebSocketServer.AddWebSocketService for better dev experience.
+
 No docs and examples.
 
 [base repo](https://github.com/sta/websocket-sharp)
