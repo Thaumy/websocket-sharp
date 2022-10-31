@@ -4,7 +4,7 @@
  *
  * The MIT License
  *
- * Copyright (c) 2012-2021 sta.blockhead
+ * Copyright (c) 2012-2022 sta.blockhead
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -471,7 +471,7 @@ namespace WebSocketSharp.Server
       _websocket.OnError += onError;
       _websocket.OnClose += onClose;
 
-      _websocket.InternalAccept ();
+      _websocket.Accept ();
     }
 
     #endregion
