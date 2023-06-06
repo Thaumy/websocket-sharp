@@ -384,9 +384,9 @@ namespace WebSocketSharp.Server
     ///   </para>
     /// </exception>
     public void AddService<TBehavior> (
-      string path, Action<TBehavior> initializer
+      string path, Func<TBehavior> initializer
     )
-      where TBehavior : WebSocketBehavior, new ()
+      where TBehavior : WebSocketBehavior
     {
       if (path == null)
         throw new ArgumentNullException ("path");
