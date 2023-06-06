@@ -50,6 +50,7 @@ namespace WebSocketSharp.Server
     private WebSocketContext                               _context;
     private Func<CookieCollection, CookieCollection, bool> _cookiesValidator;
     private bool                                           _emitOnPing;
+    private Func<string, bool>                             _hostValidator;
     private string                                         _id;
     private bool                                           _ignoreExtensions;
     private Func<string, bool>                             _originValidator;
@@ -93,6 +94,28 @@ namespace WebSocketSharp.Server
         }
 
         return _context.Headers;
+      }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether the communication is possible for
+    /// a session.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if the communication is possible; otherwise, <c>false</c>.
+    /// </value>
+    /// <exception cref="InvalidOperationException">
+    /// The session has not started yet.
+    /// </exception>
+    protected bool IsAlive {
+      get {
+        if (_websocket == null) {
+          var msg = "The session has not started yet.";
+
+          throw new InvalidOperationException (msg);
+        }
+
+        return _websocket.IsAlive;
       }
     }
 
@@ -294,6 +317,41 @@ namespace WebSocketSharp.Server
     }
 
     /// <summary>
+    /// Gets or sets the delegate used to validate the Host header.
+    /// </summary>
+    /// <value>
+    ///   <para>
+    ///   A <see cref="T:System.Func{string, bool}"/> delegate.
+    ///   </para>
+    ///   <para>
+    ///   The delegate invokes the method called when the WebSocket interface
+    ///   for a session validates the handshake request.
+    ///   </para>
+    ///   <para>
+    ///   The <see cref="string"/> parameter passed to the method is the value
+    ///   of the Host header.
+    ///   </para>
+    ///   <para>
+    ///   The method must return <c>true</c> if the header value is valid.
+    ///   </para>
+    ///   <para>
+    ///   <see langword="null"/> if not necessary.
+    ///   </para>
+    ///   <para>
+    ///   The default value is <see langword="null"/>.
+    ///   </para>
+    /// </value>
+    public Func<string, bool> HostValidator {
+      get {
+        return _hostValidator;
+      }
+
+      set {
+        _hostValidator = value;
+      }
+    }
+
+    /// <summary>
     /// Gets the unique ID of a session.
     /// </summary>
     /// <value>
@@ -445,6 +503,14 @@ namespace WebSocketSharp.Server
 
     private string checkHandshakeRequest (WebSocketContext context)
     {
+      if (_hostValidator != null) {
+        if (!_hostValidator (context.Host)) {
+          var msg = "The Host header is invalid.";
+
+          return msg;
+        }
+      }
+
       if (_originValidator != null) {
         if (!_originValidator (context.Origin)) {
           var msg = "The Origin header is non-existent or invalid.";
